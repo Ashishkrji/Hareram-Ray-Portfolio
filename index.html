@@ -12,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Play CDN — suppresses the production warning) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -30,7 +30,7 @@
                             400: '#2dd4bf',
                             500: '#14b8a6',
                             600: '#0d9488',
-                            700: '#0f766e', /* Accent Color */
+                            700: '#0f766e',
                             800: '#115e59',
                             900: '#134e4a',
                             950: '#042f2e',
@@ -49,12 +49,8 @@
                     },
                     keyframes: {
                         'gradient-x': {
-                            '0%, 100%': {
-                                'background-position': '0% 50%'
-                            },
-                            '50%': {
-                                'background-position': '100% 50%'
-                            }
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
                         },
                         'pulse-ring': {
                             '0%': { transform: 'scale(1)', opacity: '0.4' },
@@ -73,33 +69,18 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide Icons (pinned version, sync load so it's ready before DOMContentLoaded scripts run) -->
+    <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
 
     <style>
-        /* Text Selection */
-        ::selection {
-            background: #0f766e;
-            color: white;
-        }
+        ::selection { background: #0f766e; color: white; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #f9fafb; }
+        ::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 4px; }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f9fafb;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #0f766e;
-            border-radius: 4px;
-        }
-
-        /* Custom Cursor (hidden on mobile) */
         @media (pointer: fine) {
             #custom-cursor {
-                width: 8px;
-                height: 8px;
+                width: 8px; height: 8px;
                 background-color: #0f766e;
                 border-radius: 50%;
                 position: fixed;
@@ -108,78 +89,45 @@
                 transition: transform 0.08s ease-out;
                 transform: translate(-50%, -50%);
             }
-            body {
-                cursor: none;
-            }
-            a, button, input, textarea, [role="button"] {
-                cursor: none;
-            }
-            .cursor-hover #custom-cursor {
-                transform: translate(-50%, -50%) scale(2.5);
-                opacity: 0.5;
-            }
+            body { cursor: none; }
+            a, button, input, textarea, [role="button"] { cursor: none; }
+            .cursor-hover #custom-cursor { transform: translate(-50%, -50%) scale(2.5); opacity: 0.5; }
         }
-        @media (pointer: coarse) {
-            #custom-cursor {
-                display: none;
-            }
-        }
+        @media (pointer: coarse) { #custom-cursor { display: none; } }
 
-        /* Scroll Reveal Utility Classes */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal-down { opacity: 0; transform: translateY(-40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal-zoom { opacity: 0; transform: scale(1.1); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        
         .reveal-active { opacity: 1; transform: translate(0) scale(1); }
 
-        /* Teal Gradient Top Border with Hover */
         .card-gradient-border {
-            position: relative;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-top: 0;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            overflow: hidden;
+            position: relative; background: white;
+            border: 1px solid #e5e7eb; border-top: 0;
+            border-radius: 0.5rem; transition: all 0.3s ease; overflow: hidden;
         }
         .card-gradient-border::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
             background: linear-gradient(90deg, #0f766e, #06b6d4, #0f766e);
-            background-size: 200%;
-            transition: background-position 0.3s ease;
+            background-size: 200%; transition: background-position 0.3s ease;
         }
-        .card-gradient-border:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(15, 118, 110, 0.15), 0 8px 10px -6px rgba(15, 118, 110, 0.1);
-        }
-        .card-gradient-border:hover::before {
-            background-position: right center;
-        }
+        .card-gradient-border:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(15, 118, 110, 0.15), 0 8px 10px -6px rgba(15, 118, 110, 0.1); }
+        .card-gradient-border:hover::before { background-position: right center; }
 
-        /* Loader Overlay */
         #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: white; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
         }
-        .loader-fade-out {
-            animation: fadeOut 0.8s ease-in-out forwards;
-        }
+        .loader-fade-out { animation: fadeOut 0.8s ease-in-out forwards; }
+
+        /* Contact form states */
+        .form-success { display: none; }
+        .form-error-msg { display: none; color: #dc2626; font-size: 0.875rem; margin-top: 0.5rem; }
+        .btn-loading { opacity: 0.7; pointer-events: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans antialiased selection:bg-teal-700 selection:text-white">
@@ -196,21 +144,18 @@
     <!-- Custom Cursor -->
     <div id="custom-cursor"></div>
 
-    <!-- Floating Buttons (WhatsApp + Back to Top) -->
+    <!-- Floating Buttons -->
     <div class="fixed bottom-6 right-6 flex flex-row items-center gap-4 z-40 transition-opacity duration-500" 
          x-data="{ show: false, showTop: false }" 
          x-init="setTimeout(() => show = true, 2000); window.addEventListener('scroll', () => { showTop = window.scrollY > 300 })"
          :class="show ? 'opacity-100' : 'opacity-0 pointer-events-none'">
         
-        <!-- Back to Top -->
         <button @click="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to Top" title="Back to Top"
                 class="w-14 h-14 rounded-full bg-white text-gray-600 shadow-lg border border-gray-100 flex items-center justify-center hover:bg-gray-50 hover:text-teal-700 transition-all hover:-translate-y-1 hover:shadow-xl"
-                x-show="showTop"
-                x-transition.opacity.duration.300ms>
+                x-show="showTop" x-transition.opacity.duration.300ms>
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
         </button>
         
-        <!-- WhatsApp -->
         <div class="relative group">
             <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                 Chat on WhatsApp
@@ -218,7 +163,7 @@
             </div>
             <a href="https://wa.me/918292946187" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"
                class="w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,211,102,0.6)]">
-               <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+               <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             </a>
         </div>
     </div>
@@ -230,13 +175,11 @@
             :class="scrolled ? 'bg-white shadow-md border-gray-100 py-3' : 'bg-transparent py-5'">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
-                <!-- Logo -->
                 <a href="#" class="text-2xl font-black tracking-tighter text-teal-700 flex items-center gap-1">
                     <div class="w-8 h-8 rounded-lg bg-teal-700 text-white flex items-center justify-center text-lg">HR</div>
                     <span class="hidden sm:inline-block">Hareram</span>
                 </a>
 
-                <!-- Desktop Nav -->
                 <nav class="hidden md:flex items-center gap-8" x-data="{ activeSection: 'hero' }" @update-active-section.window="activeSection = $event.detail">
                     <a href="#services" class="relative font-medium text-sm transition-colors nav-link" :class="activeSection === 'services' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">
                         Services
@@ -260,12 +203,11 @@
                     </a>
                 </nav>
 
-                <!-- CTA & Mobile Toggle -->
                 <div class="flex items-center gap-4">
                     <a href="#contact" class="hidden md:inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-teal-700 hover:bg-teal-800 rounded-lg transition-colors">
                         Hire Me &rarr;
                     </a>
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle Navigation Menu" title="Toggle Navigation Menu" class="md:hidden p-2 text-gray-600 focus:outline-none">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle Navigation Menu" class="md:hidden p-2 text-gray-600 focus:outline-none">
                         <i data-lucide="menu" x-show="!mobileMenuOpen"></i>
                         <i data-lucide="x" x-show="mobileMenuOpen" x-cloak></i>
                     </button>
@@ -273,7 +215,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div x-show="mobileMenuOpen" 
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 -translate-y-4"
@@ -301,7 +242,6 @@
     <!-- SECTION 1: HERO -->
     <section id="hero" class="min-h-screen flex items-center pt-24 pb-12 bg-hero-gradient reveal-left">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <!-- Left Side -->
             <div>
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-50 border border-teal-100 text-teal-700 text-sm font-semibold mb-6 shadow-sm">
                     <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span>
@@ -332,15 +272,13 @@
                 </div>
             </div>
             
-            <!-- Right Side -->
-            <div class="relative flex justify-center md:justify-end mt-8 md:mt-0" class="reveal-scale">
+            <div class="relative flex justify-center md:justify-end mt-8 md:mt-0">
                 <div class="relative">
                     <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full p-2 bg-gradient-to-tr from-teal-700 to-cyan-400 shadow-2xl">
                         <img src="Profile-image.jpeg" alt="Hareram Ray" class="w-full h-full object-cover rounded-full border-4 border-white bg-white"
                              onerror="this.onerror=null; this.outerHTML='<div class=\'w-full h-full rounded-full border-4 border-white flex items-center justify-center bg-white\'><span class=\'text-7xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-tr from-teal-700 to-cyan-400\'>HR</span></div>';">
                     </div>
                     
-                    <!-- Floating Badge -->
                     <div class="absolute -bottom-6 -left-6 md:-left-12 bg-white px-5 py-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 animate-[bounce_3s_infinite]">
                         <div class="bg-teal-50 p-2.5 rounded-xl text-teal-700">
                             <i data-lucide="briefcase" class="w-6 h-6"></i>
@@ -364,35 +302,26 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
                 <div class="card-gradient-border p-8 reveal-up">
                     <div class="w-14 h-14 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 mb-6 transition-transform hover:scale-110">
                         <i data-lucide="users" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">HR Management</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Skilled in recruitment and selection, employee engagement, onboarding, HR documentation, and talent management. Hands-on experience from internship at Solitaire Infosystem, Mohali.
-                    </p>
+                    <p class="text-gray-600 leading-relaxed text-sm">Skilled in recruitment and selection, employee engagement, onboarding, HR documentation, and talent management. Hands-on experience from internship at Solitaire Infosystem, Mohali.</p>
                 </div>
-                <!-- Card 2 -->
                 <div class="card-gradient-border p-8 reveal-up delay-[100ms]">
                     <div class="w-14 h-14 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 mb-6 transition-transform hover:scale-110">
                         <i data-lucide="megaphone" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Marketing & Brand Promotion</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Experienced in marketing research, brand promotion, and consumer behavior analysis. Passionate about digital marketing trends and building impactful brand campaigns.
-                    </p>
+                    <p class="text-gray-600 leading-relaxed text-sm">Experienced in marketing research, brand promotion, and consumer behavior analysis. Passionate about digital marketing trends and building impactful brand campaigns.</p>
                 </div>
-                <!-- Card 3 -->
                 <div class="card-gradient-border p-8 reveal-up delay-[200ms]">
                     <div class="w-14 h-14 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 mb-6 transition-transform hover:scale-110">
                         <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Business Analytics</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Proficient in MS Excel, data interpretation, and business analytics. Capable of turning data into strategic insights to support organizational decision-making.
-                    </p>
+                    <p class="text-gray-600 leading-relaxed text-sm">Proficient in MS Excel, data interpretation, and business analytics. Capable of turning data into strategic insights to support organizational decision-making.</p>
                 </div>
             </div>
         </div>
@@ -406,9 +335,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Education</h2>
             </div>
             
-            <!-- Education Cards Grid (1 Row on Desktop) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch reveal-up">
-                <!-- Degree 1 -->
                 <div class="card-gradient-border p-6 flex flex-col justify-between bg-white">
                     <div>
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -422,9 +349,7 @@
                         <p class="text-xs text-gray-700 mb-3 bg-gray-50 p-2.5 rounded-xl border border-gray-100 font-medium shadow-sm">
                             <span class="font-bold text-gray-900">Specialization:</span> HR & Marketing
                         </p>
-                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">
-                            Focusing on advanced corporate HR strategy, talent acquisition, and brand management analytics while developing leadership capabilities.
-                        </p>
+                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">Focusing on advanced corporate HR strategy, talent acquisition, and brand management analytics while developing leadership capabilities.</p>
                     </div>
                     <div class="flex flex-wrap gap-1.5 pt-4 border-t border-gray-100">
                         <span class="px-2.5 py-1 bg-teal-50 text-teal-700 font-semibold text-[10px] rounded-lg border border-teal-100">[MBA]</span>
@@ -433,7 +358,6 @@
                     </div>
                 </div>
 
-                <!-- Degree 2 -->
                 <div class="card-gradient-border p-6 flex flex-col justify-between bg-white">
                     <div>
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -445,9 +369,7 @@
                         <h3 class="text-xl font-extrabold text-gray-900 mb-1 hover:text-teal-700 transition-colors leading-tight">Bachelor's Degree (Graduation)</h3>
                         <p class="text-sm font-bold text-teal-800 mb-2">RB College, Dalsinghsarai</p>
                         <p class="text-xs text-gray-500 mb-3 font-medium">LNMU, Darbhanga</p>
-                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">
-                            Acquired a comprehensive multidisciplinary academic foundation with strong research methodologies, critical thinking, and communication skills.
-                        </p>
+                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">Acquired a comprehensive multidisciplinary academic foundation with strong research methodologies, critical thinking, and communication skills.</p>
                     </div>
                     <div class="flex flex-wrap gap-1.5 pt-4 border-t border-gray-100">
                         <span class="px-2.5 py-1 bg-teal-50 text-teal-700 font-semibold text-[10px] rounded-lg border border-teal-100">[Graduation]</span>
@@ -455,7 +377,6 @@
                     </div>
                 </div>
 
-                <!-- Degree 3 -->
                 <div class="card-gradient-border p-6 flex flex-col justify-between bg-white">
                     <div>
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -467,9 +388,7 @@
                         <h3 class="text-xl font-extrabold text-gray-900 mb-1 hover:text-teal-700 transition-colors leading-tight">Intermediate</h3>
                         <p class="text-sm font-bold text-teal-800 mb-2">S.N.N.R. College, Chamtha</p>
                         <p class="text-xs text-gray-500 mb-3 font-medium">BSEB</p>
-                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">
-                            Completed higher secondary education under the BSEB curriculum with core theoretical concepts and quantitative aptitude.
-                        </p>
+                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">Completed higher secondary education under the BSEB curriculum with core theoretical concepts and quantitative aptitude.</p>
                     </div>
                     <div class="flex flex-wrap gap-1.5 pt-4 border-t border-gray-100">
                         <span class="px-2.5 py-1 bg-teal-50 text-teal-700 font-semibold text-[10px] rounded-lg border border-teal-100">[Intermediate]</span>
@@ -477,7 +396,6 @@
                     </div>
                 </div>
 
-                <!-- Degree 4 -->
                 <div class="card-gradient-border p-6 flex flex-col justify-between bg-white">
                     <div>
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -489,9 +407,7 @@
                         <h3 class="text-xl font-extrabold text-gray-900 mb-1 hover:text-teal-700 transition-colors leading-tight">Matriculation</h3>
                         <p class="text-sm font-bold text-teal-800 mb-2">High School Mau-Bajitpur</p>
                         <p class="text-xs text-gray-500 mb-3 font-medium">BSEB</p>
-                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">
-                            Successfully completed foundational secondary education with academic distinction and active participation in extracurricular activities.
-                        </p>
+                        <p class="text-gray-600 text-xs leading-relaxed mb-6 font-normal">Successfully completed foundational secondary education with academic distinction and active participation in extracurricular activities.</p>
                     </div>
                     <div class="flex flex-wrap gap-1.5 pt-4 border-t border-gray-100">
                         <span class="px-2.5 py-1 bg-teal-50 text-teal-700 font-semibold text-[10px] rounded-lg border border-teal-100">[Matriculation]</span>
@@ -511,7 +427,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Card 1 -->
                 <div class="card-gradient-border p-8 reveal-up">
                     <div class="flex flex-wrap justify-between items-start mb-4 gap-4">
                         <div>
@@ -532,7 +447,6 @@
                     </ul>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="card-gradient-border p-8 reveal-up delay-[100ms]">
                     <div class="flex flex-wrap justify-between items-start mb-4 gap-4">
                         <div>
@@ -553,7 +467,6 @@
                     </ul>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="card-gradient-border p-8 reveal-up">
                     <div class="flex flex-wrap justify-between items-start mb-4 gap-4">
                         <div>
@@ -572,7 +485,6 @@
                     </ul>
                 </div>
 
-                <!-- Card 4 -->
                 <div class="card-gradient-border p-8 reveal-up delay-[100ms]">
                     <div class="flex flex-wrap justify-between items-start mb-4 gap-4">
                         <div>
@@ -616,9 +528,7 @@
                     <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wide rounded-full">Research</span>
                     <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wide rounded-full">Recruitment</span>
                 </div>
-                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                    A comprehensive research project studying how Artificial Intelligence is transforming recruitment and selection processes across organizations.
-                </p>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">A comprehensive research project studying how Artificial Intelligence is transforming recruitment and selection processes across organizations.</p>
                 <div class="mb-10 bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-100">
                     <h4 class="font-bold text-gray-900 mb-4 text-lg">Key Findings:</h4>
                     <ul class="space-y-4 text-gray-700">
@@ -654,13 +564,11 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                <!-- Left: Skills -->
                 <div class="reveal-left">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                         <i data-lucide="target" class="w-6 h-6 text-teal-700"></i> HR & Marketing Skills
                     </h3>
                     <div class="flex flex-wrap gap-3 mb-12">
-                        <!-- Teal badges -->
                         <span class="px-4 py-2 bg-teal-50 text-teal-700 font-bold text-sm rounded-lg border border-teal-100 hover:bg-teal-100 transition-colors">Interpersonal Communication</span>
                         <span class="px-4 py-2 bg-teal-50 text-teal-700 font-bold text-sm rounded-lg border border-teal-100 hover:bg-teal-100 transition-colors">Recruitment & Selection</span>
                         <span class="px-4 py-2 bg-teal-50 text-teal-700 font-bold text-sm rounded-lg border border-teal-100 hover:bg-teal-100 transition-colors">Employee Engagement</span>
@@ -677,16 +585,13 @@
                         <i data-lucide="monitor" class="w-6 h-6 text-teal-700"></i> Computer Skills
                     </h3>
                     <div class="flex flex-wrap gap-3">
-                        <!-- Gray badges -->
                         <span class="px-4 py-2 bg-gray-100 text-gray-800 font-bold text-sm rounded-lg border border-gray-200 hover:bg-gray-200 transition-colors">MS Word</span>
                         <span class="px-4 py-2 bg-gray-100 text-gray-800 font-bold text-sm rounded-lg border border-gray-200 hover:bg-gray-200 transition-colors">MS Excel</span>
                         <span class="px-4 py-2 bg-gray-100 text-gray-800 font-bold text-sm rounded-lg border border-gray-200 hover:bg-gray-200 transition-colors">MS PowerPoint</span>
                     </div>
                 </div>
 
-                <!-- Right: Certifications -->
                 <div class="space-y-6">
-                    <!-- Cert 1 -->
                     <div class="card-gradient-border p-6 flex items-start gap-5 reveal-right delay-[50ms]">
                         <div class="mt-1 w-12 h-12 flex-shrink-0 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 shadow-sm">
                             <i data-lucide="briefcase"></i>
@@ -701,7 +606,6 @@
                         </div>
                     </div>
 
-                    <!-- Cert 2 -->
                     <div class="card-gradient-border p-6 flex items-start gap-5 reveal-right delay-[100ms]">
                         <div class="mt-1 w-12 h-12 flex-shrink-0 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 shadow-sm">
                             <i data-lucide="lightbulb"></i>
@@ -716,7 +620,6 @@
                         </div>
                     </div>
 
-                    <!-- Cert 3 -->
                     <div class="card-gradient-border p-6 flex items-start gap-5 reveal-right delay-[150ms]">
                         <div class="mt-1 w-12 h-12 flex-shrink-0 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 shadow-sm">
                             <i data-lucide="flag"></i>
@@ -731,7 +634,6 @@
                         </div>
                     </div>
 
-                    <!-- Cert 4 -->
                     <div class="card-gradient-border p-6 flex items-start gap-5 reveal-right delay-[200ms]">
                         <div class="mt-1 w-12 h-12 flex-shrink-0 bg-teal-50 rounded-xl flex items-center justify-center text-teal-700 shadow-sm relative">
                             <i data-lucide="shield"></i>
@@ -858,50 +760,111 @@
                     <div class="pt-8 border-t border-gray-100">
                         <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-5">Connect on Social Media</p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="https://linkedin.com/in/actual-profile-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="LinkedIn Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#0A66C2] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                            <a href="https://linkedin.com/in/actual-profile-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#0A66C2] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2v-8.37H6.46M7.83 6.34A1.43 1.43 0 0 0 6.4 7.77a1.43 1.43 0 0 0 1.43 1.43 1.43 1.43 0 0 0 1.43-1.43A1.43 1.43 0 0 0 7.83 6.34Z"/></svg>
                             </a>
-                            <a href="https://github.com/hareramray" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="GitHub Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#181717] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                            <a href="https://github.com/hareramray" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#181717] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
                             </a>
-                            <a href="https://wa.me/918292946187" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contact" title="WhatsApp Contact" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#25D366] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                            <a href="https://wa.me/918292946187" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contact" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#25D366] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                             </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) Profile" title="X (Twitter) Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-black hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-black hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 23.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" title="Instagram Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#E1306C] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#E1306C] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
                             </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile" title="Facebook Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#1877F2] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile" class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-700 hover:bg-[#1877F2] hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Form -->
+                <!-- Right Form — Web3Forms + WhatsApp Integration -->
                 <div class="card-gradient-border p-8 md:p-10 reveal-right delay-[100ms]">
-                    <form @submit.prevent="alert('Message feature is frontend only. Please contact via email or WhatsApp.')" class="space-y-6">
+                    
+                    <!-- Success State -->
+                    <div id="form-success" class="hidden text-center py-12">
+                        <div class="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-gray-900 mb-2">Message Sent! 🎉</h3>
+                        <p class="text-gray-600 mb-2">Your email has been sent successfully.</p>
+                        <p class="text-gray-500 text-sm mb-8">A WhatsApp message has also been prepared for you to send directly.</p>
+                        <button onclick="resetForm()" class="px-6 py-3 bg-teal-700 hover:bg-teal-800 text-white font-bold rounded-xl transition-all">
+                            Send Another Message
+                        </button>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl mb-6 text-sm font-medium">
+                        ⚠️ Something went wrong. Please try again or contact directly via email.
+                    </div>
+
+                    <!-- The Form -->
+                    <form id="contact-form" class="space-y-6" novalidate>
+                        <!-- Web3Forms hidden fields -->
+                        <input type="hidden" name="access_key" value="a28eb90c-40d2-4663-bc92-6100a5b036a5">
+                        <input type="hidden" name="subject" id="form-subject-hidden" value="New Contact from Portfolio">
+                        <input type="hidden" name="from_name" value="Hareram Ray Portfolio">
+                        <!-- Honeypot spam protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+
                         <div>
                             <label for="contact-name" class="block text-sm font-bold text-gray-700 mb-2">Name <span class="text-teal-700">*</span></label>
-                            <input id="contact-name" type="text" required class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
+                            <input id="contact-name" name="name" type="text" required placeholder="Your full name"
+                                   class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
                         </div>
                         <div>
                             <label for="contact-email" class="block text-sm font-bold text-gray-700 mb-2">Email <span class="text-teal-700">*</span></label>
-                            <input id="contact-email" type="email" required class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
+                            <input id="contact-email" name="email" type="email" required placeholder="your@email.com"
+                                   class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
                         </div>
                         <div>
                             <label for="contact-subject" class="block text-sm font-bold text-gray-700 mb-2">Subject</label>
-                            <input id="contact-subject" type="text" class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
+                            <input id="contact-subject" name="subject_text" type="text" placeholder="e.g. HR Opportunity / Collaboration"
+                                   class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all font-medium">
                         </div>
                         <div>
                             <label for="contact-message" class="block text-sm font-bold text-gray-700 mb-2">Message <span class="text-teal-700">*</span></label>
-                            <textarea id="contact-message" required rows="4" class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all resize-none font-medium"></textarea>
+                            <textarea id="contact-message" name="message" required rows="4" placeholder="Write your message here..."
+                                      class="w-full px-5 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all resize-none font-medium"></textarea>
                         </div>
-                        <button type="submit" class="w-full md:w-auto px-8 py-4 bg-teal-700 hover:bg-teal-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-700/20 flex items-center justify-center gap-2 hover:-translate-y-0.5">
-                            Send Message <i data-lucide="send" class="w-4 h-4 ml-1"></i>
-                        </button>
+
+                        <!-- Submit Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <!-- Primary: Send via Email (Web3Forms) -->
+                            <button type="submit" id="submit-btn"
+                                    class="flex-1 px-6 py-4 bg-teal-700 hover:bg-teal-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-700/20 flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                                <span id="btn-text">Send via Email</span>
+                                <span id="btn-spinner" class="hidden">
+                                    <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                    </svg>
+                                </span>
+                                <svg id="btn-icon" class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </button>
+
+                            <!-- Secondary: Also send via WhatsApp -->
+                            <button type="button" id="whatsapp-btn" onclick="sendViaWhatsApp()"
+                                    class="flex-1 px-6 py-4 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold rounded-xl transition-all shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                                </svg>
+                                Send via WhatsApp
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-gray-400 text-center pt-1">
+                            📧 Email goes directly to <strong>hare67938@gmail.com</strong> via Web3Forms
+                        </p>
                     </form>
                 </div>
             </div>
@@ -912,8 +875,7 @@
     <footer class="py-12 bg-white border-t border-gray-100 text-center">
         <div class="max-w-7xl mx-auto px-6 flex flex-col justify-center items-center gap-6">
             <p class="text-xs text-gray-400 font-semibold tracking-wide text-center">
-                © 2026 Hareram Kumar Ray. All rights reserved. | Design by <a href="https://mjbytech.com" target="_blank"
-                    rel="noopener noreferrer" class="text-teal-700 hover:underline">Ashish Kumar</a>
+                © 2026 Hareram Kumar Ray. All rights reserved. | Design by <a href="https://mjbytech.com" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Ashish Kumar</a>
             </p>
         </div>
     </footer>
@@ -921,19 +883,16 @@
     <!-- SCRIPTS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Init Lucide Icons
-            lucide.createIcons();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            // Loader Fade Out (0.8s animation)
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 if(loader) {
                     loader.classList.add('loader-fade-out');
                     setTimeout(() => loader.style.display = 'none', 800);
                 }
-            }, 0); // Fades out in exactly 0.8s
+            }, 0);
 
-            // Scroll Reveal
             const revealElements = document.querySelectorAll('.reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-scale, .reveal-zoom');
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -942,14 +901,9 @@
                         revealObserver.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            });
-            
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
             revealElements.forEach(el => revealObserver.observe(el));
-            
-            // Navbar Active Link Highlighting
+
             const sections = document.querySelectorAll('section[id]');
             const sectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -959,16 +913,14 @@
                     }
                 });
             }, { threshold: 0.3, rootMargin: "-10% 0px -70% 0px" });
-            
             sections.forEach(sec => sectionObserver.observe(sec));
-            
-            // Stat Counters
+
             const countUp = (el, target, duration, delay, suffix) => {
                 setTimeout(() => {
                     let startTime = null;
                     const step = (timestamp) => {
                         if (!startTime) startTime = timestamp;
-                        const progress = Math.min((timestamp-startTime)/duration, 1);
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
                         const ease = 1 - Math.pow(1 - progress, 4);
                         el.textContent = Math.floor(ease * target) + suffix;
                         if (progress < 1) requestAnimationFrame(step);
@@ -982,30 +934,18 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const counter = entry.target;
-                        const target = parseInt(counter.getAttribute('data-target'));
-                        const delay = parseInt(counter.getAttribute('data-delay'));
-                        const suffix = counter.getAttribute('data-suffix');
-                        countUp(counter, target, 2000, delay, suffix);
+                        countUp(counter, parseInt(counter.dataset.target), 2000, parseInt(counter.dataset.delay), counter.dataset.suffix);
                         counterObserver.unobserve(counter);
                     }
                 });
             }, { threshold: 0.5 });
-
             document.querySelectorAll('.stat-counter').forEach(c => counterObserver.observe(c));
 
-            // Custom Cursor (Desktop only, 80ms lag)
             const cursor = document.getElementById('custom-cursor');
             if (cursor && matchMedia('(pointer: fine)').matches) {
-                let mouseX = window.innerWidth / 2;
-                let mouseY = window.innerHeight / 2;
-                let cursorX = mouseX;
-                let cursorY = mouseY;
-                
-                document.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-                
+                let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+                let cursorX = mouseX, cursorY = mouseY;
+                document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
                 function animateCursor() {
                     cursorX += (mouseX - cursorX) * 0.2;
                     cursorY += (mouseY - cursorY) * 0.2;
@@ -1014,15 +954,108 @@
                     requestAnimationFrame(animateCursor);
                 }
                 requestAnimationFrame(animateCursor);
-                
-                const interactables = document.querySelectorAll('a, button, input, textarea');
-                interactables.forEach(el => {
+                document.querySelectorAll('a, button, input, textarea').forEach(el => {
                     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
                     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
                 });
             }
+
+            // ─── Contact Form: Web3Forms Submission ───
+            const form = document.getElementById('contact-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name    = document.getElementById('contact-name').value.trim();
+                const email   = document.getElementById('contact-email').value.trim();
+                const subject = document.getElementById('contact-subject').value.trim();
+                const message = document.getElementById('contact-message').value.trim();
+
+                if (!name || !email || !message) {
+                    document.getElementById('form-error').textContent = '⚠️ Please fill in Name, Email, and Message.';
+                    document.getElementById('form-error').classList.remove('hidden');
+                    return;
+                }
+
+                // Update hidden subject with actual subject text
+                document.getElementById('form-subject-hidden').value = subject
+                    ? `Portfolio Contact: ${subject}`
+                    : `Portfolio Contact from ${name}`;
+
+                // Show loading state
+                const btn = document.getElementById('submit-btn');
+                document.getElementById('btn-text').textContent = 'Sending...';
+                document.getElementById('btn-spinner').classList.remove('hidden');
+                document.getElementById('btn-icon').classList.add('hidden');
+                btn.disabled = true;
+                btn.classList.add('opacity-70');
+                document.getElementById('form-error').classList.add('hidden');
+
+                try {
+                    const formData = new FormData(form);
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Show success state
+                        form.classList.add('hidden');
+                        document.getElementById('form-success').classList.remove('hidden');
+
+                        // Also open WhatsApp with pre-filled message (slight delay so user sees success first)
+                        setTimeout(() => {
+                            const waMsg = `Hello Hareram! 👋\n\nI just sent you a message via your portfolio contact form.\n\n*Name:* ${name}\n*Email:* ${email}${subject ? '\n*Subject:* ' + subject : ''}\n*Message:* ${message}`;
+                            window.open('https://wa.me/918292946187?text=' + encodeURIComponent(waMsg), '_blank');
+                        }, 1200);
+                    } else {
+                        throw new Error(data.message || 'Submission failed');
+                    }
+                } catch (err) {
+                    document.getElementById('form-error').textContent = '⚠️ Something went wrong. Please email hare67938@gmail.com directly.';
+                    document.getElementById('form-error').classList.remove('hidden');
+                    // Reset button
+                    document.getElementById('btn-text').textContent = 'Send via Email';
+                    document.getElementById('btn-spinner').classList.add('hidden');
+                    document.getElementById('btn-icon').classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70');
+                }
+            });
         });
+
+        // WhatsApp direct send (without email)
+        function sendViaWhatsApp() {
+            const name    = document.getElementById('contact-name').value.trim();
+            const email   = document.getElementById('contact-email').value.trim();
+            const subject = document.getElementById('contact-subject').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+
+            if (!name && !message) {
+                const waMsg = `Hello Hareram! I visited your portfolio and would like to connect.`;
+                window.open('https://wa.me/918292946187?text=' + encodeURIComponent(waMsg), '_blank');
+                return;
+            }
+
+            const waMsg = `Hello Hareram! 👋\n\nI'm contacting you from your portfolio website.\n\n*Name:* ${name || 'Not provided'}\n*Email:* ${email || 'Not provided'}${subject ? '\n*Subject:* ' + subject : ''}\n*Message:* ${message || 'Not provided'}`;
+            window.open('https://wa.me/918292946187?text=' + encodeURIComponent(waMsg), '_blank');
+        }
+
+        // Reset form to initial state
+        function resetForm() {
+            const form = document.getElementById('contact-form');
+            form.reset();
+            form.classList.remove('hidden');
+            document.getElementById('form-success').classList.add('hidden');
+            document.getElementById('form-error').classList.add('hidden');
+            const btn = document.getElementById('submit-btn');
+            document.getElementById('btn-text').textContent = 'Send via Email';
+            document.getElementById('btn-spinner').classList.add('hidden');
+            document.getElementById('btn-icon').classList.remove('hidden');
+            btn.disabled = false;
+            btn.classList.remove('opacity-70');
+        }
     </script>
 </body>
 </html>
-
